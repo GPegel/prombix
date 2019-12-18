@@ -11,3 +11,7 @@ Feel free to fork, clone and/or contribute to this repo.
 
 ## How to set this up:
 In the file called `start.py` you will see a bunch of Docker containers being started like zabbix-server, mysql and also zabbix-agent.
+
+So to start MySQL, Zabbix Server, Zabbix Server Front-End, Zabbix Agent, ~~Prometheus~~ and ~~Grafana~~ just type in your CLI : `python3 start.py`
+
+To stop all containers you could use the `python3 stop_all.py` script but be aware, running this script wil STOP all of your running containers. Even the ones that weren't started by this project.
