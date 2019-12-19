@@ -10,6 +10,13 @@ zabbix_env = client.containers.run("zabbix/zabbix-appliance:latest",
     ports={'10051/tcp': 10051, '80/tcp': 81},
     detach=True)
 
+grafana = client.containers.run("grafana/grafana:latest",
+    name="grafana",
+    ports={'3000/tcp': 3000},
+    environment=["GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,alexanderzobnin-zabbix-app"],
+    links={'zabbix-monitoring': 'zabbix-server'},
+    detach=True)
+
 
 def get_ip(container, network_name="bridge"):
     nw = client.networks.get(network_name)
@@ -17,7 +24,9 @@ def get_ip(container, network_name="bridge"):
     return ip
 
 zabbix_env_ip = get_ip(zabbix_env)
+grafana_ip = get_ip(grafana)
 
 print("IP of Zabbix Server in Docker network is : " + zabbix_env_ip + "\n")
+print("IP of Grafana in Docker network is : " + grafana_ip + "\n")
 
 print("Containers started, have a nice day!\n")
