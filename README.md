@@ -18,7 +18,7 @@ To stop all containers you could use the `python3 stop_all.py` script but be awa
 
 ### To-do list (subject to change)
 
-- [ ] For some reason the Zabbix server does not start so 'Go Fix'.
+- [x] For some reason the Zabbix server does not start so 'Go Fix'.
 - [ ] Add Prometheus server + end-point running node-exporter https://github.com/prometheus/node_exporter
 - [ ] Add Grafana server incl. datasources and dashboards.
 - [ ] Add a call to check if Zabbix API is available.
