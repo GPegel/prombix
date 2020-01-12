@@ -5,7 +5,7 @@ import sys
 client = docker.from_env()
 toolbar_width = 40
 
-print('Please wait...')
+print('Please wait while nuking the containers...')
 sys.stdout.write("[%s]" % (" " * toolbar_width))
 sys.stdout.flush()
 sys.stdout.write("\b" * (toolbar_width+1))
