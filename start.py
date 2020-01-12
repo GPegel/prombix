@@ -1,7 +1,5 @@
 import os
 import docker
-import tarfile
-import time
 
 client = docker.from_env()
 
@@ -9,32 +7,14 @@ print('Hello, ' + os.getlogin() + '! Please wait while all containers are starti
 
 zabbix = client.containers.run("zabbix/zabbix-appliance:latest",
     name="zabbix-monitoring",
-    ports ={'80/tcp': 81},
+    ports={'80/tcp': 81},
     detach=True)
-
-def copy_to(src, dst):
-    name, dst = dst.split(':')
-    container = client.containers.get(name)
-
-    os.chdir(os.path.dirname(src))
-    srcname = os.path.basename(src)
-    tar = tarfile.open(src + '.tar', mode='w')
-    try:
-        tar.add(srcname)
-    finally:
-        tar.close()
-
-    data = open(src + '.tar', 'rb').read()
-    container.put_archive(os.path.dirname(dst), data)
 
 zabbix_agent = client.containers.run("zabbix/zabbix-agent:latest",
     name="zabbix-agent",
     links={'zabbix-monitoring': 'zabbix-server'},
+    volumes={'/Users/gpegel/Git/prombix/zabbix_config/': {'bind': '/etc/zabbix/', 'mode': 'rw'}},
     detach=True)
-
-copy_to('/Users/gpegel/Git/prombix/zabbix_config/zabbix_agentd.conf', 'zabbix-agent:/etc/zabbix/zabbix_agentd.conf')
-
-time.sleep(15)
 
 grafana = client.containers.run("grafana/grafana:latest",
     name="grafana",
