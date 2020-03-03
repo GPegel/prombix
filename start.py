@@ -13,8 +13,8 @@ zabbix = client.containers.run("zabbix/zabbix-appliance:latest",
 zabbix_agent = client.containers.run("zabbix/zabbix-agent:latest",
     name="zabbix-agent",
     links={'zabbix-monitoring': 'zabbix-server'},
-    volumes={'/Users/gerhardpegel/Git/prombix/config/zabbix_config/': {'bind': '/etc/zabbix/', 'mode': 'rw'},
-             '/Users/gerhardpegel/Git/prombix/config/zabbix_agentd.d/': {'bind': '/etc/zabbix/zabbix_agentd.d/', 'mode': 'rw'}},
+    volumes={'/Users/gerhardpegel/Git/prombix/config/zabbix_config/': {'bind': '/etc/zabbix/', 'mode': 'ro'},
+             '/Users/gerhardpegel/Git/prombix/config/zabbix_agentd.d/': {'bind': '/etc/zabbix/zabbix_agentd.d/', 'mode': 'ro'}},
     detach=True)
 
 grafana = client.containers.run("grafana/grafana:latest",
@@ -27,7 +27,7 @@ grafana = client.containers.run("grafana/grafana:latest",
 prometheus = client.containers.run("prom/prometheus:latest",
     name="prometheus",
     ports={'9090/tcp': 9090},
-    volumes={'/Users/gerhardpegel/Git/prombix/config/prometheus_config/': {'bind': '/etc/prometheus_config/', 'mode': 'rw'}},
+    volumes={'/Users/gerhardpegel/Git/prombix/config/prometheus_config/': {'bind': '/etc/prometheus_config/', 'mode': 'ro'}},
     detach=True)
 
 def get_ip(container, network_name="bridge"):
