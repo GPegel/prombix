@@ -1,9 +1,14 @@
 import os
+import sys
 import docker
 import time
-from pyzabbix import ZabbixAPI
+import glob
+from pyzabbix import ZabbixAPI, ZabbixAPIException
+
 
 client = docker.from_env()
+
+path = '/Users/gerhardpegel/Git/prombix/config/zabbix_templates'
 
 print('Hello, ' + os.getlogin() + '! Please wait while all containers are starting.\n')
 
@@ -59,13 +64,99 @@ print("IP of Prometheus in Docker network is : " + prometheus_ip + "\n")
 print("IP of Prometheus Node-Exporter in Docker network is : " + node_exporter_ip + "\n")
 
 print("Waiting 30 seconds for the Zabbix Server to become ready before doing an API call\n")
-time.sleep(30)
+time.sleep(45)
 
-zapi = ZabbixAPI("http://0.0.0.0:80")
+# I stole this part from https://github.com/lukecyca/pyzabbix
+# zapi = ZabbixAPI("http://0.0.0.0:80")
+# zapi.login("Admin", "zabbix")
+# print("Connected to Zabbix API Version %s" % zapi.api_version())
+
+# The hostname at which the Zabbix web interface is available
+ZABBIX_SERVER = 'http://0.0.0.0:80'
+
+zapi = ZabbixAPI(ZABBIX_SERVER)
+
+# Login to the Zabbix API
+#zapi.session.verify = False
 zapi.login("Admin", "zabbix")
-print("Connected to Zabbix API Version %s" % zapi.api_version())
 
-for h in zapi.host.get(output="extend"):
-    print(h['hostid'])
+rules = {
+    'applications': {
+        'createMissing': True,
+    },
+    'discoveryRules': {
+        'createMissing': True,
+        'updateExisting': True
+    },
+    'graphs': {
+        'createMissing': True,
+        'updateExisting': True
+    },
+    'groups': {
+        'createMissing': True
+    },
+    'hosts': {
+        'createMissing': True,
+        'updateExisting': True
+    },
+    'images': {
+        'createMissing': True,
+        'updateExisting': True
+    },
+    'items': {
+        'createMissing': True,
+        'updateExisting': True
+    },
+    'maps': {
+        'createMissing': True,
+        'updateExisting': True
+    },
+    'screens': {
+        'createMissing': True,
+        'updateExisting': True
+    },
+    'templateLinkage': {
+        'createMissing': True,
+    },
+    'templates': {
+        'createMissing': True,
+        'updateExisting': True
+    },
+    'templateScreens': {
+        'createMissing': True,
+        'updateExisting': True
+    },
+    'triggers': {
+        'createMissing': True,
+        'updateExisting': True
+    },
+    'valueMaps': {
+        'createMissing': True,
+        'updateExisting': True
+    },
+}
+
+if os.path.isdir(path):
+    files = glob.glob(path+'/*.xml')
+    for file in files:
+        print('Pushing this template to Zabbix:' + file)
+        with open(file, 'r') as f:
+            template = f.read()
+            try:
+                zapi.confimport('xml', template, rules)
+            except ZabbixAPIException as e:
+                print(e)
+        print('Template pushed successfully\n')
+elif os.path.isfile(path):
+    files = glob.glob(path)
+    for file in files:
+        with open(file, 'r') as f:
+            template = f.read()
+            try:
+                zapi.confimport('xml', template, rules)
+            except ZabbixAPIException as e:
+                print(e)
+else:
+    print('I need a xml file')
 
 print("Containers started, have a nice day!\n")
