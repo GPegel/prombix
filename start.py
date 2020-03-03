@@ -1,5 +1,7 @@
 import os
 import docker
+import time
+from pyzabbix import ZabbixAPI
 
 client = docker.from_env()
 
@@ -36,7 +38,6 @@ prometheus = client.containers.run("prom/prometheus:latest",
 
 node_exporter = client.containers.run("quay.io/prometheus/node-exporter",
     name="node-exporter",
-    # ports={'9100/tcp' : 9100},
     network="bridge",
     detach=True)
 
@@ -56,5 +57,15 @@ print("IP of Zabbix Agent in Docker network is : " + zabbix_agent_ip + "\n")
 print("IP of Grafana in Docker network is : " + grafana_ip + "\n")
 print("IP of Prometheus in Docker network is : " + prometheus_ip + "\n")
 print("IP of Prometheus Node-Exporter in Docker network is : " + node_exporter_ip + "\n")
+
+print("Waiting 30 seconds for the Zabbix Server to become ready before doing an API call\n")
+time.sleep(30)
+
+zapi = ZabbixAPI("http://0.0.0.0:80")
+zapi.login("Admin", "zabbix")
+print("Connected to Zabbix API Version %s" % zapi.api_version())
+
+for h in zapi.host.get(output="extend"):
+    print(h['hostid'])
 
 print("Containers started, have a nice day!\n")
