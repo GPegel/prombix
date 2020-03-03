@@ -1,0 +1,18 @@
+global:
+  scrape_interval: 10s
+  evaluation_interval: 10s
+
+# The target IP for the node-exporter is set manually. This needs a fix.
+
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["0.0.0.0:9090"]
+        labels:
+          alias: "prometheus"
+
+  - job_name: "node-exporter"
+    static_configs:
+      - targets: ["172.17.0.6:9100"]
+        labels:
+          alias: "node-exporter"
