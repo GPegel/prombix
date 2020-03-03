@@ -63,14 +63,10 @@ print("IP of Grafana in Docker network is : " + grafana_ip + "\n")
 print("IP of Prometheus in Docker network is : " + prometheus_ip + "\n")
 print("IP of Prometheus Node-Exporter in Docker network is : " + node_exporter_ip + "\n")
 
-print("Waiting 30 seconds for the Zabbix Server to become ready before doing an API call\n")
+print("Waiting 45 seconds for all containers to settle.\n")
 time.sleep(45)
 
 # I stole this part from https://github.com/lukecyca/pyzabbix
-# zapi = ZabbixAPI("http://0.0.0.0:80")
-# zapi.login("Admin", "zabbix")
-# print("Connected to Zabbix API Version %s" % zapi.api_version())
-
 # The hostname at which the Zabbix web interface is available
 ZABBIX_SERVER = 'http://0.0.0.0:80'
 

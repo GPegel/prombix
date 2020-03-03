@@ -35,4 +35,5 @@ To stop all containers you could use the `python3 stop_all.py` script but be awa
 - [ ] Add Grafana server incl. dashboards.
 - [ ] Add alert to pre-configured e-mail.
 - [ ] Add CI/CD for automatic deployment of templates and configuration files.
-- [ ] Import Zabbix templates via API call
+- [x] Import Zabbix templates via API call
+- [ ] Add Prometheus /metrics end-points to Zabbix via API for demo 
