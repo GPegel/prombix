@@ -1,0 +1,2 @@
+#ip,hostname,hostgroups
+172.16.6.38,Sample-HOST1,samples:ha
