@@ -6,6 +6,11 @@ Let Zabbix monitor Prometheus end-points
 
 Feel free to fork, clone and/or contribute to this repo.
 
+## Presentation Slides
+
+I've uploaded the presentation slides that I've used at the Zabbix Benelux Conference 2020.
+See the 'slides' folder.
+
 ## What you need:
 
 1. docker installed
@@ -37,3 +42,5 @@ To stop all containers you could use the `python3 stop_all.py` script but be awa
 - [ ] Add CI/CD for automatic deployment of templates and configuration files.
 - [x] Import Zabbix templates via API call
 - [ ] Add Prometheus /metrics end-points to Zabbix via API for demo 
+- [ ] Automatically add discovery rules
+- [ ] Automatically add auto-registration rules
