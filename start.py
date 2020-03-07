@@ -5,13 +5,15 @@ import time
 import glob
 from pyzabbix import ZabbixAPI, ZabbixAPIException
 
-
 client = docker.from_env()
 
 path = '/Users/gerhardpegel/Git/prombix/config/zabbix_templates'
 zabbix_hosts_path = '/Users/gerhardpegel/Git/prombix/config/zabbix_hosts'
 
-print('Hello, ' + os.getlogin() + '! Please wait while all containers are starting.\n')
+def lets_start():
+    print('Hello, ' + os.getlogin() + '! Please wait while all containers are starting.\n')
+
+lets_start()
 
 zabbix = client.containers.run("zabbix/zabbix-appliance:latest",
     name="zabbix-monitoring",
@@ -64,8 +66,10 @@ print("IP of Grafana in Docker network is : " + grafana_ip + "\n")
 print("IP of Prometheus in Docker network is : " + prometheus_ip + "\n")
 print("IP of Prometheus Node-Exporter in Docker network is : " + node_exporter_ip + "\n")
 
-print("Waiting 45 seconds for all containers to settle.\n")
-time.sleep(45)
+def wait():
+    print("Waiting 45 seconds for all containers to settle.\n")
+    time.sleep(45)
+wait()
 
 zabbix_server = 'http://0.0.0.0:80'
 csvfile = open(zabbix_hosts_path+'/list.csv', 'r')
@@ -208,6 +212,7 @@ else:
     print('I need a xml file')
 
 
+def the_end():
+    print("Containers started, have a nice day!\n")
 
-
-print("Containers started, have a nice day!\n")
+the_end()
