@@ -144,10 +144,6 @@ def create_host(auth_key):
             print(result)
             sys.exit()
 
-# hostid=10084&groupid=0
-def update_zabbix_host(auth_key):
-    
-
 auth_key=get_aut_key()
 host_id=create_host(auth_key)
 
