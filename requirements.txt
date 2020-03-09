@@ -1,6 +1,6 @@
 docker
 py
-os
-time
-sys
 pyzabbix
+requests
+datetime
+config

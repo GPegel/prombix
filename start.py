@@ -2,13 +2,14 @@ import os
 import sys
 import docker
 import time
-import glob
-from pyzabbix import ZabbixAPI, ZabbixAPIException
+import json
+import requests
+from requests.auth import HTTPBasicAuth
 
 client = docker.from_env()
 
-path = '/Users/gerhardpegel/Git/prombix/config/zabbix_templates'
-zabbix_hosts_path = '/Users/gerhardpegel/Git/prombix/config/zabbix_hosts'
+# Automatic upload of templates postponed
+#path = '/Users/gerhardpegel/Git/prombix/config/zabbix_templates'
 
 def lets_start():
     print('Hello, ' + os.getlogin() + '! Please wait while all containers are starting.\n')
@@ -71,146 +72,84 @@ def wait():
     time.sleep(45)
 wait()
 
-zabbix_server = 'http://0.0.0.0:80'
-csvfile = open(zabbix_hosts_path+'/list.csv', 'r')
+headers = {'content-type': 'application/json'}
+zabbix_username = "Admin"
+zabbix_password = "zabbix"
+http_auth_username = zabbix_username
+http_auth_password = zabbix_password
+url = "http://0.0.0.0/api_jsonrpc.php"
+hostname = "prometheus"
+host_dns = "prometheus.intern.whatever.com"
+host_group_id = "2"
+template_id = "10285"
 
-zapi = ZabbixAPI(zabbix_server)
-
-# Login to the Zabbix API
-#zapi.session.verify = False
-zapi.login("Admin", "zabbix")
-
-print("Connected to Zabbix API Version %s" % zapi.api_version())
-
-def get_hostgroup_id(hostgroup):
-    data = zapi.hostgroup.get(filter={'name': hostgroup})
-    if data != []:
-        hostgroupid = data[0]['groupid']
+def get_aut_key():
+    payload= {'jsonrpc': '2.0','method':'user.login','params':{'user':zabbix_username,'password':zabbix_password},'id':'1'}
+    r = requests.post(url, data=json.dumps(payload), headers=headers, verify=True, auth=HTTPBasicAuth(http_auth_username,http_auth_password))
+    if  r.status_code != 200:
+        print('problem -key')
+        print(r.status_code)
+        print(r.text)
+        sys.exit()
     else:
-        raise Exception('Could not find hostgroupID for: ' + hostgroup)
-    return str(hostgroupid)
+        result=r.json()
+        auth_key=result['result']
+        return auth_key
 
-def add_host(ip, hostname, hostgroups):
-    interface_list = [{
-        "type": 1,
-        "main": 1,
-        "useip": 1,
-        "ip": str(ip),
-        "dns": '',
-        "port": "10050"
-    }]
-
-    groups = list()
-
-    for g in hostgroups:
-        groups.append({"groupid": str(get_hostgroup_id(g))})
-
-
-    query = {
-        'host': str(hostname),
-        'groups': groups,
-        'proxy_hostid': '0',
-        'status': '0',
-        'interfaces': interface_list,
-        'inventory_mode': 1,
-        'inventory': {
-            'name': str(hostname)
-        }
+def create_host(auth_key):
+    payload={
+        "jsonrpc": "2.0",
+        "method": "host.create",
+        "params": {
+            "host": hostname,
+            "interfaces": [
+                {
+                    "type": 1,
+                    "main": 1,
+                    "useip": 1,
+                    "ip": prometheus_ip,
+                    "dns": host_dns,
+                    "port": "10050"
+                }
+            ],
+            "groups": [
+                {
+                    "groupid": host_group_id
+                }
+            ],
+            "templates": [
+                {
+                    "templateid": template_id
+                }
+            ],
+        },
+        "auth": auth_key,
+        "id": 1
     }
 
-    result = zapi.host.create(**query)
 
-for l in csvfile.readlines():
-    if l.strip().startswith('#') or not ',' in l:
-        continue
 
-    myargs = l.strip().split(',')
-    try:
-        add_host(myargs[0], myargs[1], myargs[2].split(':'))
-        print("Added %s" %myargs[0])
-    except:
-        print("Failed to add %s" %myargs[0])
-        pass
+    r = requests.post(url, data=json.dumps(payload), headers=headers, verify=True, auth=HTTPBasicAuth(http_auth_username,http_auth_password))
+    if  r.status_code != 200:
+        print('problem -request')
+        sys.exit()
+    else:
+        try:
+            result=r.json()['result']
+            host_id=result['hostids'][0]
+            return host_id
+        except:
+            result=r.json()['error']
+            print('error - creating host')
+            print(result)
+            sys.exit()
 
-rules = {
-    'applications': {
-        'createMissing': True,
-    },
-    'discoveryRules': {
-        'createMissing': True,
-        'updateExisting': True
-    },
-    'graphs': {
-        'createMissing': True,
-        'updateExisting': True
-    },
-    'groups': {
-        'createMissing': True
-    },
-    'hosts': {
-        'createMissing': True,
-        'updateExisting': True
-    },
-    'images': {
-        'createMissing': True,
-        'updateExisting': True
-    },
-    'items': {
-        'createMissing': True,
-        'updateExisting': True
-    },
-    'maps': {
-        'createMissing': True,
-        'updateExisting': True
-    },
-    'screens': {
-        'createMissing': True,
-        'updateExisting': True
-    },
-    'templateLinkage': {
-        'createMissing': True,
-    },
-    'templates': {
-        'createMissing': True,
-        'updateExisting': True
-    },
-    'templateScreens': {
-        'createMissing': True,
-        'updateExisting': True
-    },
-    'triggers': {
-        'createMissing': True,
-        'updateExisting': True
-    },
-    'valueMaps': {
-        'createMissing': True,
-        'updateExisting': True
-    },
-}
+# hostid=10084&groupid=0
+def update_zabbix_host(auth_key):
+    
 
-if os.path.isdir(path):
-    files = glob.glob(path+'/*.xml')
-    for file in files:
-        print('Pushing this template to Zabbix:' + file)
-        with open(file, 'r') as f:
-            template = f.read()
-            try:
-                zapi.confimport('xml', template, rules)
-            except ZabbixAPIException as e:
-                print(e)
-        print('Template pushed successfully\n')
-elif os.path.isfile(path):
-    files = glob.glob(path)
-    for file in files:
-        with open(file, 'r') as f:
-            template = f.read()
-            try:
-                zapi.confimport('xml', template, rules)
-            except ZabbixAPIException as e:
-                print(e)
-else:
-    print('I need a xml file')
-
+auth_key=get_aut_key()
+host_id=create_host(auth_key)
 
 def the_end():
     print("Containers started, have a nice day!\n")
