@@ -1,6 +1,19 @@
 # PromBix
 
-Let Zabbix monitor Prometheus end-points
+Let Zabbix monitor Prometheus end-points by automatically start Zabbix server, Zabbix Agent, Prometheus, Grafana and a Node exporter.
+
+
+When you start Prombix, hopefully everything starts fine without any errors or warnings than you have not only  a running Zabbix server with a pre-configured agent.  But also some other nice things that are not completed yet. 
+
+**Currently in progress** -> Grafana will be installed including the Zabbix datasource and Zabbix dashboard.
+
+And last but certainly not least, a Prometheus server will be available and the node exporter is also up and running exposing all kinds of metrics of the node that's installed on. For example, it exposes all the metrics of my macbook when I run this locally.
+
+Within Zabbix, a template will be added later automatically, I had a nice piece of code for it but I dropped it for now.
+
+This goes also for the auto-registration rules and auto-discovery added via the Zabbix API. 
+
+Longs story short, see next topic ;-)
 
 ## This project is still a 'Work in Progress'
 
@@ -19,9 +32,9 @@ See the 'slides' folder.
 
 ## How to set this up:
 
-In the file called `start.py` you will see a bunch of Docker containers being started like zabbix-server, mysql and also zabbix-agent.
+In the file called `start.py` you will see a bunch of Docker containers being started like zabbix-appliance, zabbix-agent and also Grafana.
 
-So to start MySQL, Zabbix Server, Zabbix Server Front-End, Zabbix Agent, ~~Prometheus~~ and Grafana just type in your CLI : `python3 start.py`
+So to start the containers, just type in your CLI : `python3 start.py`
 
 To stop all containers you could use the `python3 stop_all.py` script but be aware, running this script wil stop and remove ALL of your running containers. Even the ones that weren't started by this project.
 
