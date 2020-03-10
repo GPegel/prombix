@@ -5,6 +5,7 @@ import time
 import json
 import requests
 from requests.auth import HTTPBasicAuth
+# from pygrafana import GrafanaManager
 
 client = docker.from_env()
 
@@ -75,17 +76,15 @@ wait()
 headers = {'content-type': 'application/json'}
 zabbix_username = "Admin"
 zabbix_password = "zabbix"
-http_auth_username = zabbix_username
-http_auth_password = zabbix_password
-url = "http://0.0.0.0/api_jsonrpc.php"
+url_zabbix_api = "http://0.0.0.0/api_jsonrpc.php"
 hostname = "prometheus"
 host_dns = "prometheus.intern.whatever.com"
 host_group_id = "2"
 template_id = "10285"
 
-def get_aut_key():
+def get_aut_key_zabbix():
     payload= {'jsonrpc': '2.0','method':'user.login','params':{'user':zabbix_username,'password':zabbix_password},'id':'1'}
-    r = requests.post(url, data=json.dumps(payload), headers=headers, verify=True, auth=HTTPBasicAuth(http_auth_username,http_auth_password))
+    r = requests.post(url_zabbix_api, data=json.dumps(payload), headers=headers, verify=True, auth=HTTPBasicAuth(zabbix_username,zabbix_password))
     if  r.status_code != 200:
         print('problem -key')
         print(r.status_code)
@@ -93,10 +92,10 @@ def get_aut_key():
         sys.exit()
     else:
         result=r.json()
-        auth_key=result['result']
-        return auth_key
+        auth_key_zabbix=result['result']
+        return auth_key_zabbix
 
-def create_host(auth_key):
+def create_host(auth_key_zabbix):
     payload={
         "jsonrpc": "2.0",
         "method": "host.create",
@@ -123,13 +122,11 @@ def create_host(auth_key):
                 }
             ],
         },
-        "auth": auth_key,
+        "auth": auth_key_zabbix,
         "id": 1
     }
 
-
-
-    r = requests.post(url, data=json.dumps(payload), headers=headers, verify=True, auth=HTTPBasicAuth(http_auth_username,http_auth_password))
+    r = requests.post(url_zabbix_api, data=json.dumps(payload), headers=headers, verify=True, auth=HTTPBasicAuth(zabbix_username,zabbix_password))
     if  r.status_code != 200:
         print('problem -request')
         sys.exit()
@@ -144,8 +141,16 @@ def create_host(auth_key):
             print(result)
             sys.exit()
 
-auth_key=get_aut_key()
-host_id=create_host(auth_key)
+auth_key_zabbix=get_aut_key_zabbix()
+host_id=create_host(auth_key_zabbix)
+
+# gm = GrafanaManager("http://admin:admin@localhost:3000")
+# gm.EnablePlugin("alexanderzobnin-zabbix-app")
+# gm.zbx_user = "admin"
+# gm.zbx_pswd = "zabbix"
+# gm.zbx_url = "http://0.0.0.0/api_jsonrpc.php"
+# gm.CreateDatastore("Zabbix DataSource")
+# gm.ImportDashboard("grafana_dashboards/zabbix_dashboard.json")
 
 def the_end():
     print("Containers started, have a nice day!\n")
