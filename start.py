@@ -138,9 +138,6 @@ def create_host(auth_key_zabbix):
             print(result)
             sys.exit()
 
-auth_key_zabbix=get_aut_key_zabbix()
-host_id=create_host(auth_key_zabbix)
-
 def enable_zabbix_plugin():
     url = "http://admin:admin@localhost:3000/api/plugins/alexanderzobnin-zabbix-app/settings/"
     payload = "{\n  \"name\": \"Zabbix\",\n  \"type\": \"app\",\n  \"id\": \"alexanderzobnin-zabbix-app\",\n  \"enabled\": true,\n  \"basicAuth\": true,\n  \"basicAuthUser\": \"admin\",\n  \"secureJsonData\": {\n    \"basicAuthPassword\": \"admin\"\n  }\n}"
@@ -153,6 +150,8 @@ def add_zabbix_datasource():
     headers = {'Content-Type': 'application/json'}
     response = requests.request("POST", url, headers=headers, data = payload)
 
+auth_key_zabbix=get_aut_key_zabbix()
+host_id=create_host(auth_key_zabbix)
 enable_zabbix_plugin()
 add_zabbix_datasource()
 
