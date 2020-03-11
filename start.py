@@ -8,9 +8,6 @@ from requests.auth import HTTPBasicAuth
 
 client = docker.from_env()
 
-# Automatic upload of templates postponed
-#path = '/Users/gerhardpegel/Git/prombix/config/zabbix_templates'
-
 def lets_start():
     print('Hello, ' + os.getlogin() + '! Please wait while all containers are starting.\n')
 
