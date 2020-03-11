@@ -98,10 +98,10 @@
       "includeVars": true,
       "keepTime": true,
       "tags": [
-        "zabbix34"
+        "Zabbix"
       ],
       "targetBlank": true,
-      "title": "ZABBIX34",
+      "title": "Zabbix",
       "type": "dashboards"
     },
     {
@@ -193,7 +193,7 @@
         "rgba(0, 158, 71, 0.77)",
         "rgba(245, 54, 54, 0.9)"
       ],
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "editable": true,
       "error": false,
       "format": "s",
@@ -294,7 +294,7 @@
         "rgba(0, 156, 70, 0.77)",
         "rgba(50, 172, 45, 0.97)"
       ],
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "description": "",
       "editable": true,
       "error": false,
@@ -408,7 +408,7 @@
         "rgba(0, 156, 70, 0.77)",
         "rgba(245, 54, 54, 0.9)"
       ],
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "description": "",
       "editable": true,
       "error": false,
@@ -511,7 +511,7 @@
         "rgba(0, 156, 70, 0.77)",
         "rgba(245, 54, 54, 0.9)"
       ],
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "description": "",
       "editable": true,
       "error": false,
@@ -614,7 +614,7 @@
         "rgb(237, 132, 10)",
         "rgba(50, 172, 45, 0.97)"
       ],
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "description": "",
       "editable": true,
       "error": false,
@@ -717,7 +717,7 @@
         "rgba(0, 156, 70, 0.77)",
         "rgba(245, 54, 54, 0.9)"
       ],
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "description": "",
       "editable": true,
       "error": false,
@@ -820,7 +820,7 @@
         "rgba(0, 156, 70, 0.77)",
         "rgba(245, 54, 54, 0.9)"
       ],
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "description": "",
       "editable": true,
       "error": false,
@@ -929,7 +929,7 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(245, 54, 54, 0.9)"
       ],
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "decimals": 2,
       "editable": true,
       "error": false,
@@ -1045,7 +1045,7 @@
       "ackEventColor": "rgb(56, 219, 156)",
       "customLastChangeFormat": false,
       "datasources": [
-        "Zabbix34"
+        "Zabbix"
       ],
       "descriptionAtNewLine": false,
       "descriptionField": true,
@@ -1083,7 +1083,7 @@
       },
       "statusField": true,
       "targets": {
-        "Zabbix34": {
+        "Zabbix": {
           "application": {
             "filter": ""
           },
@@ -1166,7 +1166,7 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(245, 54, 54, 0.9)"
       ],
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "decimals": 2,
       "editable": true,
       "error": false,
@@ -1273,7 +1273,7 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(245, 54, 54, 0.9)"
       ],
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "decimals": 2,
       "editable": true,
       "error": false,
@@ -1380,7 +1380,7 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(245, 54, 54, 0.9)"
       ],
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "decimals": 2,
       "editable": true,
       "error": false,
@@ -1487,7 +1487,7 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(245, 54, 54, 0.9)"
       ],
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "decimals": 2,
       "editable": true,
       "error": false,
@@ -1594,7 +1594,7 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(245, 54, 54, 0.9)"
       ],
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "decimals": 2,
       "editable": true,
       "error": false,
@@ -1701,7 +1701,7 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(245, 54, 54, 0.9)"
       ],
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "decimals": 2,
       "editable": true,
       "error": false,
@@ -1818,7 +1818,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "fill": 1,
       "gridPos": {
         "h": 8,
@@ -1947,7 +1947,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "editable": true,
       "error": false,
       "fill": 1,
@@ -2118,7 +2118,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "editable": true,
       "error": false,
       "fill": 1,
@@ -2320,7 +2320,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "decimals": null,
       "editable": true,
       "error": false,
@@ -2477,7 +2477,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "decimals": 2,
       "editable": true,
       "error": false,
@@ -2602,7 +2602,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -2795,7 +2795,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "format": "s",
       "gauge": {
         "maxValue": 100,
@@ -2919,7 +2919,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#299c46"
       ],
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -3048,7 +3048,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#299c46"
       ],
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -3171,7 +3171,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "fill": 2,
       "gridPos": {
         "h": 8,
@@ -3358,7 +3358,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "fill": 1,
       "gridPos": {
         "h": 5,
@@ -3490,7 +3490,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "fill": 2,
       "gridPos": {
         "h": 7,
@@ -3727,7 +3727,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "fill": 3,
       "gridPos": {
         "h": 7,
@@ -3863,7 +3863,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${Zabbix}",
+      "datasource": "Zabbix",
       "fill": 2,
       "gridPos": {
         "h": 7,
@@ -4102,14 +4102,14 @@
   "schemaVersion": 16,
   "style": "dark",
   "tags": [
-    "zabbix34"
+    "Zabbix"
   ],
   "templating": {
     "list": [
       {
         "allValue": null,
         "current": {},
-        "datasource": "${Zabbix}",
+        "datasource": "Zabbix",
         "hide": 0,
         "includeAll": false,
         "label": "GROUP",
@@ -4129,7 +4129,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${Zabbix}",
+        "datasource": "Zabbix",
         "hide": 0,
         "includeAll": false,
         "label": "HOST",
