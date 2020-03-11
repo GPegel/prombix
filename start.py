@@ -149,7 +149,14 @@ def enable_zabbix_plugin():
     headers = {'Content-Type': 'application/json'}
     response = requests.request("POST", url, headers=headers, data = payload)
 
+def add_zabbix_datasource():
+    url = "http://admin:admin@localhost:3000/api/datasources"
+    payload = "{\n    \"name\": \"Zabbix\",\n    \"type\": \"alexanderzobnin-zabbix-datasource\",\n    \"url\": \"http://0.0.0.0/api_jsonrpc.php\",\n    \"access\": \"direct\",\n    \"basicAuth\": false,\n    \"isDefault\": true,\n    \"jsonData\": {\n        \"addThresholds\": false,\n        \"alerting\": false,\n        \"alertingMinSeverity\": 3,\n        \"dbConnectionDatasourceId\": null,\n        \"dbConnectionEnable\": false,\n        \"disableReadOnlyUsersAck\": false,\n        \"password\": \"zabbix\",\n        \"trends\": false,\n        \"username\": \"Admin\",\n        \"zabbixVersion\": 4\n    }\n}"
+    headers = {'Content-Type': 'application/json'}
+    response = requests.request("POST", url, headers=headers, data = payload)
+
 enable_zabbix_plugin()
+add_zabbix_datasource()
 
 def the_end():
     print("Containers started, have a nice day!\n")
