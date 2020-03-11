@@ -71,10 +71,10 @@
       "icon": "external link",
       "tags": [],
       "targetBlank": true,
-      "title": "TDW",
-      "tooltip": "",
+      "title": "PromBix",
+      "tooltip": "Visit PromBix Repository",
       "type": "link",
-      "url": "https://www.tuandai.com"
+      "url": "https://github.com/GPegel/prombix"
     },
     {
       "icon": "external link",
@@ -169,7 +169,7 @@
       "type": "row"
     },
     {
-      "content": "<br>\n<h1 style=\"text-align: center;\"><img src=\"https://images.esp-online.com/thumbnails/aws_solution_list_thumbnail/2614/9455/9402/ZABBIX_LOGO.jpg\" alt=\"\" width=\"191\" height=\"50\" /></h1>\n<h1 style=\"text-align: center;\"><span style=\"color: #ffffff;\"><strong>TDW</strong></span></h1>\n<h1 style=\"text-align: center;\"><span style=\"color: #ffffff;\"><strong>$host</strong></span></h1>",
+      "content": "<br>\n<h1 style=\"text-align: center;\"><img src=\"https://images.esp-online.com/thumbnails/aws_solution_list_thumbnail/2614/9455/9402/ZABBIX_LOGO.jpg\" alt=\"\" width=\"191\" height=\"50\" /></h1>\n<h1 style=\"text-align: center;\"><span style=\"color: #ffffff;\"><strong>PromBix</strong></span></h1>\n<h1 style=\"text-align: center;\"><span style=\"color: #ffffff;\"><strong>$host</strong></span></h1>",
       "gridPos": {
         "h": 5,
         "w": 4,
