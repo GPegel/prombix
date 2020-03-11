@@ -50,10 +50,11 @@ To stop all containers you could use the `python3 stop_all.py` script but be awa
 - [x] Add Prometheus server + end-point running node-exporter https://github.com/prometheus/node_exporter
 - [x] Add Grafana server.
 - [x] Add Grafana server incl. Zabbix datasources.
-- [ ] Add Grafana server incl. dashboards.
+- [x] Add Grafana server incl. dashboards. 
 - [ ] Add alert to pre-configured e-mail.
 - [ ] Add CI/CD for automatic deployment of templates and configuration files.
 - [x] Import Zabbix templates via API call (for now postponed)
 - [ ] Add Prometheus /metrics end-points to Zabbix via API for demo 
 - [ ] Automatically add discovery rules
 - [ ] Automatically add auto-registration rules
+- [ ] Add Grafana dashboards by file, not how it's currently done by Prombix.
