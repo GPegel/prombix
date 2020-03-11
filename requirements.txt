@@ -4,4 +4,3 @@ pyzabbix
 requests
 datetime
 config
-pygrafana

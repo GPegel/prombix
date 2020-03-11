@@ -5,7 +5,6 @@ import time
 import json
 import requests
 from requests.auth import HTTPBasicAuth
-# from pygrafana import GrafanaManager
 
 client = docker.from_env()
 
@@ -144,13 +143,13 @@ def create_host(auth_key_zabbix):
 auth_key_zabbix=get_aut_key_zabbix()
 host_id=create_host(auth_key_zabbix)
 
-# gm = GrafanaManager("http://admin:admin@localhost:3000")
-# gm.EnablePlugin("alexanderzobnin-zabbix-app")
-# gm.zbx_user = "admin"
-# gm.zbx_pswd = "zabbix"
-# gm.zbx_url = "http://0.0.0.0/api_jsonrpc.php"
-# gm.CreateDatastore("Zabbix DataSource")
-# gm.ImportDashboard("grafana_dashboards/zabbix_dashboard.json")
+def enable_zabbix_plugin():
+    url = "http://admin:admin@localhost:3000/api/plugins/alexanderzobnin-zabbix-app/settings/"
+    payload = "{\n  \"name\": \"Zabbix\",\n  \"type\": \"app\",\n  \"id\": \"alexanderzobnin-zabbix-app\",\n  \"enabled\": true,\n  \"basicAuth\": true,\n  \"basicAuthUser\": \"admin\",\n  \"secureJsonData\": {\n    \"basicAuthPassword\": \"admin\"\n  }\n}"
+    headers = {'Content-Type': 'application/json'}
+    response = requests.request("POST", url, headers=headers, data = payload)
+
+enable_zabbix_plugin()
 
 def the_end():
     print("Containers started, have a nice day!\n")
