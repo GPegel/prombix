@@ -57,4 +57,4 @@ To stop all containers you could use the `python3 stop_all.py` script but be awa
 - [ ] Add Prometheus /metrics end-points to Zabbix via API for demo 
 - [ ] Automatically add discovery rules
 - [ ] Automatically add auto-registration rules
-- [ ] Add Grafana dashboards by file, not how it's currently done by Prombix.
+- [x] Add Grafana dashboards by file, not how it's currently done by Prombix.
