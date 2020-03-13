@@ -249,7 +249,7 @@
       "targets": [
         {
           "application": {
-            "filter": "General"
+            "filter": "Status"
           },
           "functions": [],
           "group": {
@@ -362,7 +362,7 @@
             "filter": "$host"
           },
           "item": {
-            "filter": "Agent ping"
+            "filter": "Zabbix agent ping"
           },
           "mode": 0,
           "options": {
@@ -466,7 +466,7 @@
       "targets": [
         {
           "application": {
-            "filter": "OS"
+            "filter": "General"
           },
           "functions": [],
           "group": {
@@ -579,7 +579,7 @@
             "filter": "$host"
           },
           "item": {
-            "filter": "Zabbix history write cache, % free"
+            "filter": "Zabbix history write cache, % used"
           },
           "mode": 0,
           "options": {
@@ -598,7 +598,7 @@
         }
       ],
       "thresholds": "",
-      "title": "history write cache, % free",
+      "title": "history write cache, % used",
       "transparent": true,
       "type": "singlestat",
       "valueFontSize": "100%",
@@ -888,7 +888,7 @@
             "filter": "$host"
           },
           "item": {
-            "filter": "/Values processed by .*/"
+            "filter": "Number of processed values per second"
           },
           "mode": 0,
           "options": {
@@ -1232,7 +1232,7 @@
             "filter": "$host"
           },
           "item": {
-            "filter": "Zabbix busy icmp pinger processes, in %"
+            "filter": "Utilization of icmp pinger data collector processes, in %"
           },
           "mode": 0,
           "options": {
@@ -1339,7 +1339,7 @@
             "filter": "$host"
           },
           "item": {
-            "filter": "Zabbix busy housekeeper processes, in %"
+            "filter": "Utilization of housekeeper internal processes, in %"
           },
           "mode": 0,
           "options": {
@@ -1446,7 +1446,7 @@
             "filter": "$host"
           },
           "item": {
-            "filter": "Zabbix busy poller processes, in %"
+            "filter": "Utilization of poller data collector processes, in %"
           },
           "mode": 0,
           "options": {
@@ -1553,7 +1553,7 @@
             "filter": "$host"
           },
           "item": {
-            "filter": "Zabbix busy alerter processes, in %"
+            "filter": "Utilization of alerter internal processes, in %"
           },
           "mode": 0,
           "options": {
@@ -1660,7 +1660,7 @@
             "filter": "$host"
           },
           "item": {
-            "filter": "Zabbix busy history syncer processes, in %"
+            "filter": "Utilization of history syncer internal processes, in %"
           },
           "mode": 0,
           "options": {
@@ -1767,7 +1767,7 @@
             "filter": "$host"
           },
           "item": {
-            "filter": "Zabbix busy trapper processes, in %"
+            "filter": "Utilization of trapper data collector processes, in %"
           },
           "mode": 0,
           "options": {
@@ -1994,7 +1994,7 @@
             "filter": "$host"
           },
           "item": {
-            "filter": "Processor load (1 min average per core)"
+            "filter": "Load average (1m avg)"
           },
           "mode": 0,
           "options": {
@@ -2023,7 +2023,7 @@
             "filter": "$host"
           },
           "item": {
-            "filter": "Processor load (15 min average per core)"
+            "filter": "Load average (15m avg)"
           },
           "mode": 0,
           "options": {
@@ -2052,7 +2052,7 @@
             "filter": "$host"
           },
           "item": {
-            "filter": "Processor load (5 min average per core)"
+            "filter": "Load average (5m avg)"
           },
           "mode": 0,
           "options": {

@@ -31,7 +31,7 @@ grafana = client.containers.run("grafana/grafana:latest",
     name="grafana",
     ports={'3000/tcp': 3000},
     environment=["GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,alexanderzobnin-zabbix-app"],
-    volumes={'/Users/gerhardpegel/Git/prombix/config/grafana_config/': {'bind': '/etc/grafana/', 'mode': 'rw'}},
+    volumes={'/Users/gerhardpegel/Git/prombix/config/grafana_config/': {'bind': '/etc/grafana/', 'mode': 'ro'}},
     links={'zabbix-monitoring': 'zabbix-server'},
     network="bridge",
     detach=True)
@@ -138,6 +138,46 @@ def create_host(auth_key_zabbix):
             print(result)
             sys.exit()
 
+def update_zabbix_host(auth_key_zabbix):
+    payload={
+        "jsonrpc": "2.0",
+        "method": "host.update",
+        "params": {
+            "hostid": "10084",
+            "host" : "zabbix-server",
+            "interfaces": [
+                {
+                "interfaceid": "1",
+                "hostid": "10084",
+                "main": "1",
+                "type": "1",
+                "useip": "1",
+                "ip": zabbix_agent_ip,
+                "dns": "",
+                "port": "10050",
+                "bulk": "1"
+                }
+            ],
+        },
+        "auth": auth_key_zabbix,
+        "id": 1
+    }
+
+    r = requests.post(url_zabbix_api, data=json.dumps(payload), headers=headers, verify=True, auth=HTTPBasicAuth(zabbix_username,zabbix_password))
+    if  r.status_code != 200:
+        print('problem -request')
+        sys.exit()
+    else:
+        try:
+            result=r.json()['result']
+            host_id=result['hostids'][0]
+            return host_id
+        except:
+            result=r.json()['error']
+            print('error - updating host')
+            print(result)
+            sys.exit()
+
 def enable_zabbix_plugin():
     url = "http://admin:admin@localhost:3000/api/plugins/alexanderzobnin-zabbix-app/settings/"
     payload = "{\n  \"name\": \"Zabbix\",\n  \"type\": \"app\",\n  \"id\": \"alexanderzobnin-zabbix-app\",\n  \"enabled\": true,\n  \"basicAuth\": true,\n  \"basicAuthUser\": \"admin\",\n  \"secureJsonData\": {\n    \"basicAuthPassword\": \"admin\"\n  }\n}"
@@ -151,6 +191,7 @@ def add_zabbix_datasource():
     response = requests.request("POST", url, headers=headers, data = payload)
 
 auth_key_zabbix=get_aut_key_zabbix()
+host_id=update_zabbix_host(auth_key_zabbix)
 host_id=create_host(auth_key_zabbix)
 enable_zabbix_plugin()
 add_zabbix_datasource()
