@@ -352,7 +352,7 @@
       "targets": [
         {
           "application": {
-            "filter": "Zabbix agent"
+            "filter": ""
           },
           "functions": [],
           "group": {

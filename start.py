@@ -40,11 +40,13 @@ prometheus = client.containers.run("prom/prometheus:latest",
     name="prometheus",
     ports={'9090/tcp': 9090},
     volumes={'/Users/gerhardpegel/Git/prombix/config/prometheus_config/': {'bind': '/etc/prometheus/', 'mode': 'ro'}},
+    links={'zabbix-monitoring': 'zabbix-server'},
     network="bridge",
     detach=True)
 
 node_exporter = client.containers.run("quay.io/prometheus/node-exporter",
     name="node-exporter",
+    links={'zabbix-monitoring': 'zabbix-server'},
     network="bridge",
     detach=True)
 
@@ -103,7 +105,7 @@ def create_host(auth_key_zabbix):
                     "type": 1,
                     "main": 1,
                     "useip": 1,
-                    "ip": prometheus_ip,
+                    "ip": node_exporter_ip,
                     "dns": host_dns,
                     "port": "10050"
                 }
@@ -190,11 +192,18 @@ def add_zabbix_datasource():
     headers = {'Content-Type': 'application/json'}
     response = requests.request("POST", url, headers=headers, data = payload)
 
+def add_prometheus_datasource():
+    url = "http://admin:admin@localhost:3000/api/datasources"
+    payload = "{\n  \"name\":\"Prometheus\",\n  \"type\":\"prometheus\",\n  \"url\":\"http://0.0.0.0:9090\",\n  \"access\":\"direct\",\n  \"basicAuth\":false\n}"
+    headers = {'Content-Type': 'application/json'}
+    response = requests.request("POST", url, headers=headers, data = payload)
+
 auth_key_zabbix=get_aut_key_zabbix()
 host_id=update_zabbix_host(auth_key_zabbix)
 host_id=create_host(auth_key_zabbix)
 enable_zabbix_plugin()
 add_zabbix_datasource()
+add_prometheus_datasource()
 
 def the_end():
     print("Containers started, have a nice day!\n")
