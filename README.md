@@ -44,8 +44,8 @@ To stop all containers you could use the `python3 stop_all.py` script but be awa
 ## Access Zabbix from Grafana
 
 1. Visit `0.0.0.0:3000` in your browser and sign in with default Grafana credentials (admin/admin)
-2. Currently there are 2 dashboards available. These dashobards are being provisioned while putthing `.json` files into the `\grafana_config\privsioning\dashboards\` folder
-3. If you need more dashboards, create them or just download a json file from the Grafana website (https://grafana.com/grafana/dashboards) and put that into the above mentioned folder. Please note, using and ID to get access to a dashboard does not save the dashboard. So you could use an ID to test if things are working, alter the dashboard and then export the JSON file and put that in to the above mention folder. Then next time you will start this script the dashboards will be added automatically.
+2. Currently there are 2 dashboards available. These dashboards are being provisioned while putting `.json` files into the `\grafana_config\provisioning\dashboards\` folder
+3. If you need more dashboards, create them or just download a json file from the Grafana website (https://grafana.com/grafana/dashboards) and put that into the above mentioned folder. Please note, using and ID to get access to a dashboard does not save the dashboard. So you could use an ID to test if things are working, alter the dashboard, when needed, and than export the JSON file and put that in to the above mentioned folder. The next time you will start this script the dashboards will be added automatically.
 
 ### To-do list (subject to change)
 
