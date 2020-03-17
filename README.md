@@ -36,13 +36,16 @@ In the file called `start.py` you will see a bunch of Docker containers being st
 
 So to start the containers, just type in your CLI : `python3 start.py`
 
-To stop all containers you could use the `python3 stop_all.py` script but be aware, running this script wil stop and remove ALL of your running containers. Even the ones that weren't started by this project.
+When everything is up & running you are able to open Zabbix at `0.0.0.0:80` in your web browser while using the default Zabbix credentials (Admin/zabbix) and at port 3000 you can find Grafana.
+At port 9090 there's a Prometheus instance running.
+
+To stop all containers you could use the `python3 stop_all.py` script but be aware, running this script wil stop and remove ALL of your running containers. Even the ones that weren't started by this project. The stop script is also a `work in progress` 
 
 ## Access Zabbix from Grafana
 
-1. check if Zabbix plugin is enabled
-2. add http://localhost/api_jsonrpc.php as HTTP URL in Grafana datasource
-3. Have fun creating dashboards
+1. Visit `0.0.0.0:3000` in your browser and sign in with default Grafana credentials (admin/admin)
+2. Currently there are 2 dashboards available. These dashobards are being provisioned while putthing `.json` files into the `\grafana_config\privsioning\dashboards\` folder
+3. If you need more dashboards, create them or just download a json file from the Grafana website (https://grafana.com/grafana/dashboards) and put that into the above mentioned folder. Please note, using and ID to get access to a dashboard does not save the dashboard. So you could use an ID to test if things are working, alter the dashboard and then export the JSON file and put that in to the above mention folder. Then next time you will start this script the dashboards will be added automatically.
 
 ### To-do list (subject to change)
 
@@ -59,3 +62,6 @@ To stop all containers you could use the `python3 stop_all.py` script but be awa
 - [ ] Automatically add auto-registration rules
 - [x] Add Grafana dashboards by file, not how it's currently done by Prombix.
 - [x] Add Prometheus datasource via API
+- [ ] Find a way to reload config in running container (https://www.consul.io)
+- [ ] Add options to restart containers when needed
+
