@@ -16,6 +16,7 @@ lets_start()
 zabbix = client.containers.run("zabbix/zabbix-appliance:latest",
     name="zabbix-monitoring",
     ports={'80/tcp': 80},
+    volumes={'/Users/gerhardpegel/Git/prombix/config/zabbix/': {'bind': '/etc/zabbix/', 'mode': 'ro'}},
     network="bridge",
     detach=True)
 
