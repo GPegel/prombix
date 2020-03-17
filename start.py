@@ -173,11 +173,81 @@ def update_zabbix_host(auth_key_zabbix):
     else:
         try:
             result=r.json()['result']
-            host_id=result['hostids'][0]
-            return host_id
+            update_host_id=result['hostids'][0]
+            return update_host_id
         except:
             result=r.json()['error']
             print('error - updating host')
+            print(result)
+            sys.exit()
+
+def add_discovery_rule_node_exporter(auth_key_zabbix):
+    payload={
+        "jsonrpc": "2.0",
+        "method": "drule.create",
+        "params": {
+            "name": "Node exporters end-point discovery",
+            "iprange": "172.17.0.1-255",
+            "dchecks": [
+                {
+                    "type": "9",
+                    "key_": "system.uname",
+                    "ports": "9100",
+                    "uniq": "0"
+                }
+            ],
+        },
+        "auth": auth_key_zabbix,
+        "id": 1
+    }
+
+    r = requests.post(url_zabbix_api, data=json.dumps(payload), headers=headers, verify=True, auth=HTTPBasicAuth(zabbix_username,zabbix_password))
+    if  r.status_code != 200:
+        print('problem -request')
+        sys.exit()
+    else:
+        try:
+            result=r.json()['result']
+            node_exporter_id=result['druleids'][0]
+            return node_exporter_id
+        except:
+            result=r.json()['error']
+            print('error - updating discovery rule')
+            print(result)
+            sys.exit()
+
+def add_discovery_rule_prometheus(auth_key_zabbix):
+    payload={
+        "jsonrpc": "2.0",
+        "method": "drule.create",
+        "params": {
+            "name": "Prometheus end-point discovery",
+            "iprange": "172.17.0.1-255",
+            "dchecks": [
+                {
+                    "type": "9",
+                    "key_": "system.uname",
+                    "ports": "9090",
+                    "uniq": "0"
+                }
+            ],
+        },
+        "auth": auth_key_zabbix,
+        "id": 1
+    }
+
+    r = requests.post(url_zabbix_api, data=json.dumps(payload), headers=headers, verify=True, auth=HTTPBasicAuth(zabbix_username,zabbix_password))
+    if  r.status_code != 200:
+        print('problem -request')
+        sys.exit()
+    else:
+        try:
+            result=r.json()['result']
+            prometheus_id=result['druleids'][0]
+            return prometheus_id
+        except:
+            result=r.json()['error']
+            print('error - updating discovery rule')
             print(result)
             sys.exit()
 
@@ -200,8 +270,10 @@ def add_prometheus_datasource():
     response = requests.request("POST", url, headers=headers, data = payload)
 
 auth_key_zabbix=get_aut_key_zabbix()
-host_id=update_zabbix_host(auth_key_zabbix)
+update_host_id=update_zabbix_host(auth_key_zabbix)
 host_id=create_host(auth_key_zabbix)
+node_exporter_id=add_discovery_rule_node_exporter(auth_key_zabbix)
+prometheus_id=add_discovery_rule_prometheus()
 enable_zabbix_plugin()
 add_zabbix_datasource()
 add_prometheus_datasource()
