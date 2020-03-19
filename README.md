@@ -55,7 +55,6 @@ To stop all containers you could use the `python3 stop_all.py` script but be awa
 - [x] Add Grafana server incl. Zabbix datasources.
 - [x] Add Grafana server incl. dashboards. 
 - [ ] Add alert to pre-configured e-mail.
-- [ ] Add CI/CD for automatic deployment of templates and configuration files.
 - [x] Import Zabbix templates via API call (for now postponed)
 - [x] Add Prometheus /metrics end-points to Zabbix via API for demo 
 - [x] Automatically add discovery rules
@@ -64,4 +63,5 @@ To stop all containers you could use the `python3 stop_all.py` script but be awa
 - [x] Add Prometheus datasource via API
 - [ ] Find a way to reload config in running container (https://www.consul.io)
 - [ ] Add options to restart containers when needed
+- [ ] Create a launchpad
 
