@@ -1,3 +1,4 @@
 # ignore
 .DS_Store
 *.tar
+.idea
